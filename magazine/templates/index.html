@@ -1,0 +1,128 @@
+{% extends "base_original.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<!-- <img src="{% static "magazine/images/comm_crop.jpeg" %}" class = "header-image img-responsive" alt="Main Image" > -->
+<div class="container">
+
+<h1 class="header">CURRENT ISSUE: <a href="{{issue.get_absolute_url}}"> {{issue}} </a></h1>
+
+{% for section, article  in sections.items %}
+{% if forloop.counter0|divisibleby:2 %}
+
+<div class="row">
+
+{% endif %}
+    <div class="col-md-6">
+      <h2 class="subheader">{{section|upper}}</h2>
+     <a href="{{ article.get_absolute_url }}" class="no-decoration"> <h4 class="subheader-article-name"> {{article.title}}</h4> </a>
+       {% for author in article.contributors.all %}
+         <a href="{{ author.get_absolute_url }}" class="no-decoration"> <h3 class="subheader-article-author"> {{ author.name }} </h3> </a>
+        {% empty %}
+          <h3 class="subheader-article-author"> No Author </h3>
+       {% endfor %}
+      {% if section == "art" %}
+        <figure class="resize-image" style="margin:auto;">
+        	<!-- pass in art image link HERE -->
+    			<img src="{{ MEDIA_URL }}{{article.image.photo|safe}}" class = "img-responsive" alt="Main Image" >
+        </figure>
+      {% else %}
+      <p class="article-summary"> {{article.teaser}}.... <a href="{{ article.get_absolute_url }}" class="">[Continue reading]</a></p>  
+      {% endif %}
+  </div>
+{% if forloop.counter|divisibleby:2 %}
+</div>
+{% endif %}
+
+{% endfor %} 
+
+<!-- sorry there is some janky code in here, doing quick troubleshooting things -->
+
+{% for section, article  in sections.items %}
+
+{% if section == 'poetry' %}
+
+   <div class="col">
+    
+      <h2 class="subheader">{{section|upper}}</h2>
+      {% for i in "xxxxx" %}
+    <div class = 'row'>
+     <a href="{{ article.get_absolute_url }}" class="no-decoration"> <h4 class="subheader-article-name"> {{article.title}}</h4> </a>
+       {% for author in article.contributors.all %}
+         <a href="{{ author.get_absolute_url }}" class="no-decoration"> <h3 class="subheader-article-author"> {{ author.name }} </h3> </a>
+        {% empty %}
+          <h3 class="subheader-article-author"> No Author </h3>
+      {% endfor %}
+      <br>
+    </div>
+{% endfor %}
+</div>
+
+
+{% elif section == "art" %}
+
+      <div class="col">
+       
+      <h2 class="subheader">{{section|upper}}</h2>
+       {% for i in "xxx" %}
+        <div class = 'row'>
+     <a href="{{ article.get_absolute_url }}" class="no-decoration"> <h4 class="subheader-article-name"> {{article.title}}</h4> </a>
+        {% for author in article.contributors.all %}
+         <a href="{{ author.get_absolute_url }}" class="no-decoration"> <h3 class="subheader-article-author"> {{ author.name }} </h3> </a>
+        {% empty %}
+          <h3 class="subheader-article-author"> No Author </h3>
+        {% endfor %}
+   
+        <figure class="resize-image2" style="margin:auto;">
+          <!--pass in art image link HERE-->
+          <img src="{{ MEDIA_URL }}{{article.image.photo|safe}}" class = "img-responsive" alt="Main Image" >
+        </figure>
+  </div>
+
+
+{% endfor %}
+  </div>
+
+
+{% elif section == 'features' %}
+  
+   <div class="col">
+    
+      <h2 class="subheader">{{section|upper}}</h2>
+      {% for i in "xxxxx" %}
+    <div class = 'row'>
+     <a href="{{ article.get_absolute_url }}" class="no-decoration"> <h4 class="subheader-article-name"> {{article.title}}</h4> </a>
+       {% for author in article.contributors.all %}
+         <a href="{{ author.get_absolute_url }}" class="no-decoration"> <h3 class="subheader-article-author"> {{ author.name }} </h3> </a>
+        {% empty %}
+          <h3 class="subheader-article-author"> No Author </h3>
+      {% endfor %}
+      <br>
+
+       </div>
+{% endfor %}
+ </div>
+
+<br>
+{% elif section == 'fiction' %}
+<div class="col">
+
+      <h2 class="subheader">{{section|upper}}</h2>
+      {% for i in "xxxxx" %}
+   <div class="row">
+     <a href="{{ article.get_absolute_url }}" class="no-decoration"> <h4 class="subheader-article-name"> {{article.title}}</h4> </a>
+       {% for author in article.contributors.all %}
+         <a href="{{ author.get_absolute_url }}" class="no-decoration"> <h3 class="subheader-article-author"> {{ author.name }} </h3> </a>
+        {% empty %}
+          <h3 class="subheader-article-author"> No Author </h3>
+      {% endfor %}
+      <br>
+
+      </div>
+{% endfor %}
+</div>
+{% endif %}
+{% endfor %}
+
+  {% endblock %}
